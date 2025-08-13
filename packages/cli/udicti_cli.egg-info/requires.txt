@@ -1,4 +1,0 @@
-click>=8.1
-rich
-pyfiglet
-typer[all]
