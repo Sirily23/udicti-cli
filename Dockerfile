@@ -24,9 +24,5 @@ ENV FIREBASE_CONFIG_JSON='{}'
 RUN useradd --create-home --shell /bin/bash udicti
 USER udicti
 
-# Expose port (if you plan to add web features later)
-EXPOSE 8000
-
-# Set the entrypoint
-ENTRYPOINT ["udicti"]
-CMD ["--help"]
+# For background worker - keep container alive
+CMD ["tail", "-f", "/dev/null"]
