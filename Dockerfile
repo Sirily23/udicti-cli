@@ -20,9 +20,14 @@ RUN pip install --no-cache-dir -e .
 # Set Firebase config as environment variable
 ENV FIREBASE_CONFIG_JSON='{}'
 
-# Create a non-root user
-RUN useradd --create-home --shell /bin/bash udicti
-USER udicti
+# Expose port for Render (Render uses port 10000 by default)
+EXPOSE 10000
 
-# For background worker - keep container alive
-CMD ["tail", "-f", "/dev/null"]
+# Create a simple web server to keep the service alive
+RUN pip install flask
+
+# Create a simple web interface
+COPY web_server.py /app/web_server.py
+
+# Start the web server
+CMD ["python", "web_server.py"]
