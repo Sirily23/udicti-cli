@@ -94,3 +94,6 @@ node_modules/
 .*
 !.gitignore
 !.github/
+
+# Test files
+tests/
