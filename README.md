@@ -1,4 +1,4 @@
-# UDICTI CLI 🚀
+# UDICTI CLI 
 ### Your Community & Workflow Toolkit for UDSM Developers
 
 **UDICTI CLI** is a simple, command-line tool built by and for developers at UDSM. It centralizes community connection, smart Git workflows, and developer analytics—all designed around real club needs and integrated with GitHub.
