@@ -1,0 +1,15 @@
+# File: render.yaml
+
+services:
+  - type: web
+    name: udicti-cli
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: FIREBASE_CONFIG_JSON
+        sync: false  # Set this manually in Render dashboard
+      - key: PYTHON_VERSION
+        value: "3.11"
+    scaling:
+      minInstances: 1
+      maxInstances: 3
