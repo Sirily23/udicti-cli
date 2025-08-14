@@ -1,0 +1,6 @@
+[project]
+name = "udicti-core"
+version = "1.0.0"
+description = "Core logic for UDICTI tools."
+requires-python = ">=3.11"
+

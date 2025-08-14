@@ -1,4 +1,32 @@
+[project]
+name = "udicti-cli"
+version = "1.0.0"
+description = "A powerful CLI tool to simplify your Github Community workflow"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+    "rich",
+    "pyfiglet",
+    "typer[all]",
+    "httpx",
+    "requests",
+    "rich-gradient",  
+    "firebase-admin",
+]
+
+[project.scripts]
+udicti = "udicti_cli.main:app"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["packages/cli"]
+include = ["udicti_cli*"]
+
+[tool.setuptools.package-dir]
+"" = "packages/cli"
+
 [tool.ruff]
 line-length = 88
-
-

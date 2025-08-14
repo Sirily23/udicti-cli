@@ -48,10 +48,11 @@ UDICTI_BANNER_TINY = """
 ╚═══════════════╝
 """
 
+
 def get_responsive_banner():
     """Return appropriate banner based on terminal width"""
     terminal_width = console.size.width
-    
+
     if terminal_width >= 80:
         return UDICTI_BANNER_FULL
     elif terminal_width >= 60:
@@ -61,6 +62,7 @@ def get_responsive_banner():
     else:
         return UDICTI_BANNER_TINY
 
+
 @app.command("")
 def show_welcome():
     """
@@ -68,13 +70,18 @@ def show_welcome():
     """
     # Get responsive banner
     banner = get_responsive_banner()
-    
+
     gradient_banner = Gradient(
         banner,
         rainbow=False,
-        colors=["#87ceeb", "#0864af","#1264a7", "#043463"]  # Light blue → UDICTI Blue → Dark blue
+        colors=[
+            "#87ceeb",
+            "#0864af",
+            "#1264a7",
+            "#043463",
+        ],  # Light blue → UDICTI Blue → Dark blue
     )
-   
+
     main_message = Text.from_markup(
         "\n[bold green]Welcome to the UDICTI Developer CLI![/bold green]\n"
         "Your Developer Analytics & Workflow Toolkit for UDICTI\n\n"
@@ -88,6 +95,7 @@ def show_welcome():
 
     console.print(gradient_banner)
     console.print(main_message)
+
 
 @app.callback(invoke_without_command=True)
 def welcome_callback(ctx: typer.Context):
