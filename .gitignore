@@ -97,6 +97,3 @@ node_modules/
 
 # Test files
 tests/
-
-# GitHub Actions
-.github/workflows/local-*

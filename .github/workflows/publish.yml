@@ -1,12 +1,14 @@
+# File: .github/workflows/publish.yml
+
 name: Publish to PyPI
 
 on:
   push:
     tags:
-      - 'v1.0.0'  
+      - 'v*'  # Trigger on version tags like v1.0.0
   release:
     types: [published]
-  workflow_dispatch: 
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   test:
@@ -93,6 +95,10 @@ jobs:
     needs: [build, publish-test]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v'))
+    environment:
+      name: pypi
+      url: https://pypi.org/p/udicti-cli
+    
     steps:
     - uses: actions/checkout@v4
     

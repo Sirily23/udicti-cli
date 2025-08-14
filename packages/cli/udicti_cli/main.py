@@ -28,6 +28,7 @@ app = typer.Typer(
 )
 
 
+
 firebase_config_json = os.environ.get("FIREBASE_CONFIG_JSON")
 if not firebase_config_json:
     console.print(
