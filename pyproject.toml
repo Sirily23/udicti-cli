@@ -1,6 +1,6 @@
 [project]
 name = "udicti-cli"
-version = "1.0.0"
+version = "1.0.1"
 description = "A powerful Github CLI tool to simplify your workflow"
 authors = [
   { name="Sirily", email="sirilylasway@gmail.com" },
