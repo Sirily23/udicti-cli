@@ -2,7 +2,7 @@
 
 """
 This module defines the commands for new user onboarding, such as the `join` command.
-It handles user input, GitHub authentication, and registration with Firebase.
+It handles user input, GitHub authentication, and registration via the backend API.
 """
 import typer
 import requests
@@ -12,9 +12,9 @@ from rich.prompt import Prompt, Confirm
 from rich.table import Table
 from rich.text import Text
 
-# Import Firebase and GitHub auth utilities
-from . import firebase
+# Import GitHub auth utilities
 from .github_auth import load_github_pat
+from ..main import api_request, log_event
 
 # Initialize a rich console object for printing
 console = Console()
@@ -22,13 +22,9 @@ console = Console()
 # Create a Typer application for the onboarding commands
 onboarding_app = typer.Typer()
 
-
 def get_github_user_info(pat: str) -> dict:
     """
     Fetches user information from GitHub using the Personal Access Token.
-
-    Returns:
-        dict: GitHub user info including name, email, and username
     """
     headers = {
         "Authorization": f"token {pat}",
@@ -63,12 +59,13 @@ def get_github_user_info(pat: str) -> dict:
         console.print(f"[bold red]Error fetching GitHub info: {e}[/bold red]")
         return None
 
-
 @onboarding_app.command("join")
 def join_community():
     """
-    Joins the UDICTI community using GitHub authentication and Firebase registration.
+    Joins the UDICTI community using GitHub authentication and backend API.
     """
+    log_event("join_command_started")
+    
     console.print(
         "[bold dodger_blue3]🚀 Welcome to the UDICTI Dev Team! Let's get you signed up.[/bold dodger_blue3]"
     )
@@ -142,28 +139,29 @@ def join_community():
     )
     skills = [skill.strip() for skill in skills_input.split(",") if skill.strip()]
 
-    # Step 4: Initialize Firebase and save to database
+    # Step 4: Send to backend API
     try:
-        console.print("[dim] Saving to UDICTI database...[/dim]")
+        console.print("[dim] 💾 Saving to UDICTI database...[/dim]")
 
-        # Initialize Firebase (you'll need to import FIREBASE_CONFIG from main.py)
-        from ..main import FIREBASE_CONFIG
+        developer_data = {
+            "name": github_info["name"],
+            "email": github_info["email"],
+            "github": github_info["github"],
+            "interests": interests,
+            "skills": skills,
+        }
 
-        firebase.init_firebase(FIREBASE_CONFIG)
-
-        # Add developer to database
-        firebase.add_developer(
-            name=github_info["name"],
-            email=github_info["email"],
-            github=github_info["github"],
-            interests=interests,
-            skills=skills,
-        )
-
-        console.print("[bold green] Successfully registered with UDICTI![/bold green]")
+        result = api_request("developers", method="POST", data=developer_data)
+        
+        if result and result.get("success"):
+            console.print("[bold green] ✅ Successfully registered with UDICTI![/bold green]")
+            log_event("developer_registered", {"github": github_info["github"]})
+        else:
+            console.print("[bold red] ❌ Error saving to database[/bold red]")
+            raise typer.Exit(1)
 
     except Exception as e:
-        console.print(f"[bold red] Error saving to database: {e}[/bold red]")
+        console.print(f"[bold red] ❌ Error saving to database: {e}[/bold red]")
         raise typer.Exit(1)
 
     # Step 5: Show welcome message and existing developers
@@ -185,11 +183,13 @@ def join_community():
         )
     )
 
-    # Step 6: Display all registered developers from Firebase
+    # Step 6: Display all registered developers from backend
     try:
-        developers = firebase.get_developers()
-
-        if developers:
+        developers_data = api_request("developers")
+        
+        if developers_data and developers_data.get("developers"):
+            developers = developers_data["developers"]
+            
             table = Table(
                 title="[bold white] UDICTI Developer Roster[/bold white]",
                 show_header=True,
@@ -224,3 +224,5 @@ def join_community():
     console.print(
         "\n[bold dodger_blue3]🚀 Ready to start building amazing things with UDICTI![/bold dodger_blue3]"
     )
+    
+    log_event("join_command_completed")
