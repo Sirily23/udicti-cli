@@ -3,6 +3,7 @@
 
 <a>
 <img src="./assets/udicti-cli.png" alt="UDICTI-CLI logo"> </a>
+
 **UDICTI CLI** is a simple, command-line tool built by and for developers at UDSM. It centralizes community connection, smart Git workflows, and developer analytics—all designed around real club needs and integrated with GitHub.
 
 This CLI is mainly for learning and can help you get started using and building CLI tools
