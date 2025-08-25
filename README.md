@@ -22,15 +22,73 @@ This CLI is mainly for learning and can help you get started using and building 
 
 ## 📦 Installation
 
-`udicti-cli` is available on PyPI. We highly recommend using a virtual environment.
+###  Recommended: Using pipx (All Platforms)
 
+**pipx** installs CLI tools in isolated environments while making them globally available.
+
+#### Linux (Ubuntu/Debian)
 ```bash
-# Install from PyPI
-pip install udicti-cli
+# Install pipx
+sudo apt install pipx
 
-# Run the welcome command
+# Install UDICTI CLI
+pipx install udicti-cli
+
+# Use anywhere
 udicti welcome
 ```
+
+#### macOS
+```bash
+# Install pipx via Homebrew
+brew install pipx
+
+# Or via pip
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Install UDICTI CLI
+pipx install udicti-cli
+
+# Use anywhere
+udicti welcome
+```
+
+#### Windows
+```cmd
+# Install pipx via pip
+python -m pip install --user pipx
+python -m pipx ensurepath
+
+# Install UDICTI CLI
+pipx install udicti-cli
+
+# Use anywhere
+udicti welcome
+```
+
+---
+
+### 🐍 Alternative: Using Virtual Environment
+
+#### Linux/macOS
+```bash
+# Create virtual environment
+python3 -m venv udicti-env
+
+# Activate virtual environment
+source udicti-env/bin/activate
+
+# Install UDICTI CLI
+pip install udicti-cli
+
+# Use the CLI
+udicti welcome
+
+# To use later, reactivate:
+source udicti-env/bin/activate
+```
+ ---
 
 For the latest development version, you can install it directly from the repository:
 

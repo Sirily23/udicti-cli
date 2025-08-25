@@ -1,6 +1,6 @@
 [project]
 name = "udicti-cli"
-version = "1.0.1"
+version = "1.0.2"
 description = "A powerful Github CLI tool to simplify your workflow"
 authors = [
   { name="Sirily", email="sirilylasway@gmail.com" },
@@ -11,6 +11,7 @@ requires-python = ">=3.11"
 dependencies = [
     "click>=8.1",
     "rich",
+    "rich-gradient",
     "pyfiglet",
     "typer[all]",
     "requests",
