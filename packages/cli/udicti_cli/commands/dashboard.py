@@ -18,7 +18,7 @@ from .github_auth import load_github_token, clear_github_token  # Updated functi
 from . import firebase
 
 console = Console()
-dashboard_app = typer.Typer()
+dashboard_app = typer.Typer(help="Display an overview of your current profile and progress in Github")
 
 GITHUB_API_BASE_URL = "https://api.github.com"
 UDICTI_ORG_NAME = "udicti"

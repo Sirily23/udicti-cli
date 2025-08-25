@@ -15,8 +15,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 console = Console()
 
-# GitHub OAuth App credentials (you'll need to create a GitHub App)
-GITHUB_CLIENT_ID = "Iv23liYBZbvclFcmuOd6"  # Replace with your GitHub App client ID
+GITHUB_CLIENT_ID = "Iv23liYBZbvclFcmuOd6"  
 
 # Path to store the OAuth token securely
 AUTH_DIR = Path(typer.get_app_dir("udicti-cli", roaming=True)) / "auth"
@@ -109,7 +108,7 @@ def poll_for_token(device_code: str, interval: int):
             raise Exception(f"Unexpected error: {data}")
 
 
-github_auth_app = typer.Typer()
+github_auth_app = typer.Typer(help="A secure way to authenticate with your Github Account")
 
 
 @github_auth_app.command("login")

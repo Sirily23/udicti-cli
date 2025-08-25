@@ -8,14 +8,14 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-# Import the firebase utility module to interact with Firestore
-from udicti_cli.commands import firebase
+# Import the utils for API requests
+from ..utils import api_request, log_event
 
 # Initialize a rich console object for printing
 console = Console()
 
 # Create a Typer application for the show command
-show_app = typer.Typer()
+show_app = typer.Typer(help="Show information about UDICTI community")
 
 
 @show_app.command("devs")
@@ -25,15 +25,19 @@ def show_developers():
     Includes their name, email, GitHub username, interests, and skills.
     """
     console.print("[bold cyan]Fetching UDICTI developers from the cloud...[/bold cyan]")
+    log_event("show_developers_command")
+    
     try:
-        # Retrieve the list of developers from Firestore via the firebase utility
-        developers = firebase.get_developers()
-
-        if not developers:
+        # Retrieve the list of developers from backend API
+        result = api_request("developers")
+        
+        if not result or not result.get("developers"):
             console.print(
                 "[dim]No developers registered yet. Use `udicti join` to be the first![/dim]"
             )
             return
+
+        developers = result["developers"]
 
         # Create a Rich Table to display the developer data
         table = Table(
@@ -73,6 +77,9 @@ def show_developers():
 
         # Print the fully constructed table to the console
         console.print(table)
+        
+        console.print(f"\n[dim]Total developers: {len(developers)}[/dim]")
+        
     except Exception as e:
         # Catch and report any errors that occur during the process
         console.print(
