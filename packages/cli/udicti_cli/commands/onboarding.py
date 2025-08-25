@@ -14,7 +14,7 @@ from rich.text import Text
 
 # Import GitHub auth utilities
 from .github_auth import load_github_pat
-from ..main import api_request, log_event
+from ..utils import api_request, log_event
 
 # Initialize a rich console object for printing
 console = Console()
